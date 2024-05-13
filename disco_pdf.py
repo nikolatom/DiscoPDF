@@ -54,11 +54,13 @@ def create_conversational_chain(vector_store):
     # Create llm
     llm = LlamaCpp(
     streaming = True,
-    model_path="/Users/ntom/opt/disco_pdf/model/Mistral-7B-instruct-v0.1/mistral-7b-instruct-v0.1.Q8_0.gguf",
+    model_path="model/Meta-Llama-3-8B-Instruct-Q5_K_M.gguf",
     temperature=0.75,
     top_p=1, 
     verbose=True,
-    n_ctx=4096
+    n_ctx=4096,
+    n_batch=512, # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
+    n_gpu_layers=-1, # Change this value based on your model and your GPU VRAM pool.
 )
     
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
